@@ -145,12 +145,6 @@ def forgot_word(event=None):
     show_word_screen()
 
 
-def show_meaning():
-    meaning_label.config(text=current_word[2])
-    next_button.pack()
-    forgot_button.pack()
-
-
 def add_new_word(event=None):
 
     # def add(event=None):
@@ -187,6 +181,9 @@ def insert_new_word(entry_word, entry_meaning, add_word_window):
 def show_meaning_screen(event=None):
     main_frame.pack_forget()
     show_frame.pack()
+    root.unbind("<Down>")
+    root.bind("<Left>", forgot_word)
+    root.bind("<Right>", next_word)
     show_word_show()
 
 
@@ -271,6 +268,9 @@ def view_all_words(event=None):
 
 def main_screen():
     main_frame.pack()
+    root.bind("<Down>", show_meaning_screen)
+    root.unbind("<Left>")
+    root.unbind("<Right>")
     show_word_main()
     # show_button.pack()
     # add_word_button.pack()
@@ -298,10 +298,6 @@ analysis = tk.Label(main_frame, text="", font=("Arial", 10))
 
 entry_word = tk.Entry(add_word_window, font=("Arial", 10))
 entry_meaning = tk.Entry(add_word_window, font=("Arial", 10))
-
-root.bind("<Down>", show_meaning_screen)
-root.bind("<Left>", forgot_word)
-root.bind("<Right>", next_word)
 
 main_screen()
 root.mainloop()
