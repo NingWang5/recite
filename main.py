@@ -147,12 +147,12 @@ def forgot_word(event=None):
 
 def add_new_word(event=None):
 
-    # def add(event=None):
-    #     insert_new_word(entry_word, entry_meaning, add_word_window)
+    def add(event=None):
+        insert_new_word(entry_word, entry_meaning, add_word_window)
 
     add_word_window = tk.Toplevel(root)
     add_word_window.title("Add New Word")
-    # add_word_window.bind("<Enter>", add)
+
 
     label_meaning = tk.Label(add_word_window, text="English:", font=("Arial", 10))
     entry_meaning = tk.Entry(add_word_window, font=("Arial", 10), width=50)
@@ -166,6 +166,8 @@ def add_new_word(event=None):
     label_word.grid(row=2, column=1, padx=5, pady=1)
     entry_word.grid(row=2, column=2, padx=5, pady=1)
     add_button.grid(row=3, column=2, padx=5, pady=1)
+
+    add_word_window.bind("<Shift-Return>", add)
 
 
 def insert_new_word(entry_word, entry_meaning, add_word_window):
