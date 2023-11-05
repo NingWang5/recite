@@ -247,7 +247,7 @@ def view_all_words(event=None):
                 id, word, meaning, right, wrong = item
                 error_rate = (wrong / (right + wrong)) if (right + wrong) != 0 else 0
 
-                label_id = tk.Label(content_frame, text=f"{id:^5}", font=("Arial", 10), anchor="w", justify="left")
+                label_id = tk.Label(content_frame, text=f"{idx+1:^5}", font=("Arial", 10), anchor="w", justify="left")
                 label_word = tk.Label(content_frame, text=f"{word:^60}", font=("Arial", 10), anchor="w", justify="left")
                 label_meaning = tk.Label(content_frame, text=f"{meaning:^60}", font=("Arial", 10), anchor="w",
                                          justify="left")
