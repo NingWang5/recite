@@ -235,16 +235,16 @@ def view_all_words(event=None):
         for widget in content_frame.winfo_children():
             widget.destroy()
 
-        cursor.execute('SELECT id, word, meaning, right, wrong FROM words WHERE word LIKE ? OR meaning LIKE ?', ('%' + keyword + '%', '%' + keyword + '%'))
+        cursor.execute('SELECT id, word, meaning, right, wrong, last_reviewed, next_review, interval FROM words WHERE word LIKE ? OR meaning LIKE ?', ('%' + keyword + '%', '%' + keyword + '%'))
         search_results = cursor.fetchall()
 
         if search_results:
-            label_text = "{:^80} {:^90} {:^15} {:^5}".format('English', 'Chinese', 'Rate', 'Option')
+            label_text = "{:^80} {:^90} {:^10} {:^5} {:^10} {:^10} {:^10}".format('English', 'Chinese', 'Rate', 'Option', 'Last Review', 'Next Review', 'Interval')
             label = tk.Label(content_frame, text=label_text, font=("Arial", 10))
             label.grid(row=0, column=0, columnspan=5)
 
             for idx, item in enumerate(search_results):
-                id, word, meaning, right, wrong = item
+                id, word, meaning, right, wrong, last_review, next_review, interval = item
                 error_rate = (wrong / (right + wrong)) if (right + wrong) != 0 else 0
 
                 label_id = tk.Label(content_frame, text=f"{idx+1:^5}", font=("Arial", 10), anchor="w", justify="left")
@@ -253,14 +253,22 @@ def view_all_words(event=None):
                                          justify="left")
                 label_error_rate = tk.Label(content_frame, text=f"{error_rate:.2%}", font=("Arial", 10), anchor="w",
                                             justify="left")
+                delete_button = tk.Button(content_frame, text="Delete", command=lambda id=id: delete_word(id))
+                label_last_review = tk.Label(content_frame, text=f"{last_review:^10}", font=("Arial", 10), anchor="w",
+                                            justify="left")
+                label_next_review = tk.Label(content_frame, text=f"{next_review:^10}", font=("Arial", 10), anchor="w",
+                                            justify="left")
+                label_interval = tk.Label(content_frame, text=f"{interval:^10}", font=("Arial", 10), anchor="w",
+                                            justify="left")
 
                 label_id.grid(row=idx + 1, column=0)
                 label_word.grid(row=idx + 1, column=1)
                 label_meaning.grid(row=idx + 1, column=2)
                 label_error_rate.grid(row=idx + 1, column=3)
-
-                delete_button = tk.Button(content_frame, text="Delete", command=lambda id=id: delete_word(id))
                 delete_button.grid(row=idx + 1, column=4, padx=20)
+                label_last_review.grid(row=idx + 1, column=5)
+                label_next_review.grid(row=idx + 1, column=6)
+                label_interval.grid(row=idx + 1, column=7)
 
         content_frame.update_idletasks()
         canvas.config(scrollregion=canvas.bbox("all"))
