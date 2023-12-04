@@ -131,7 +131,7 @@ def next_word(event=None):
         if current_word[8] == 0:
             global factor
             interval = current_word[5] * factor if current_word[3] != current_word[4] else 1
-            interval = 30 if interval >= 30 else interval
+            interval = 16 if interval >= 16 else interval
             update_word(current_word[0], interval, current_word[6] + 1, current_word[7], 0)
         else:
             update_word(current_word[0], 1, current_word[6] + 1, current_word[7], 0)
